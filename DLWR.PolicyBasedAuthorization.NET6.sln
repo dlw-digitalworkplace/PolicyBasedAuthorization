@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLWR.PolicyBasedAuthorization.NET6", "DLWR.PolicyBasedAuthorization.NET6\DLWR.PolicyBasedAuthorization.NET6.csproj", "{88145E5A-FC35-41AD-8B04-EA2F430F36AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88145E5A-FC35-41AD-8B04-EA2F430F36AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88145E5A-FC35-41AD-8B04-EA2F430F36AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88145E5A-FC35-41AD-8B04-EA2F430F36AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88145E5A-FC35-41AD-8B04-EA2F430F36AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEAE1B2E-DA34-49C0-B8AB-7E2B9930CFA2}
+	EndGlobalSection
+EndGlobal
