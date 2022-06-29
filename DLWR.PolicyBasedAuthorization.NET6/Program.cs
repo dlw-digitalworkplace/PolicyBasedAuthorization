@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 ////// INJECT CUSTOM AUTHORIZATION HANDLERS //////
-builder.Services.AddScoped<IAuthorizationHandler, MyHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, WeatherMenOnlyHandler>();
 ////// INJECT CUSTOM AUTHORIZATION HANDLERS //////
 
 ////// ADD AUTHENTICATION //////
@@ -19,7 +19,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 ////// ADD AUTHORIZATION + CUSTOM POLICIES //////
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("My", p => p.AddRequirements(new MyRequirement()));
+    options.AddPolicy("WeatherMenOnly", p => p.AddRequirements(new WeatherMenOnlyRequirement()));
 });
 ////// ADD AUTHORIZATION + CUSTOM POLICIES //////
 

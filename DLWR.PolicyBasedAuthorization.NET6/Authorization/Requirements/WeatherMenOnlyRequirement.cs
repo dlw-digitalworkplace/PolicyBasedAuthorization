@@ -2,7 +2,7 @@
 
 namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Requirements
 {
-    public class MyRequirement : IAuthorizationRequirement
+    public class WeatherMenOnlyRequirement : IAuthorizationRequirement
     {
     }
 }

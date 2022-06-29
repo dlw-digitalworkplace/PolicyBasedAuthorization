@@ -77,6 +77,7 @@ Fill out all parameters correctly! Use the Postman console for debugging purpose
 
 - Add [Authorize] attribute. This will only verify if user is authenticated
 - Add [RequiredScope("access_as_user")] to only allow if access_as_user scope is present in JWT token
+- Add [Authorize(Roles = "Administrator")] to use role based authorization
 
 ## Policy based authorization:
 

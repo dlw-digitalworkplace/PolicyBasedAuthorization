@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
 {
-    internal class MyHandler : AuthorizationHandler<MyRequirement>
+    internal class WeatherMenOnlyHandler : AuthorizationHandler<WeatherMenOnlyRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MyHandler(IHttpContextAccessor httpContextAccessor)
+        public WeatherMenOnlyHandler(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
@@ -15,7 +15,12 @@ namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
-            MyRequirement requirement
+            ///
+            /// A requirement can have multiple handlers. A handler may inherit AuthorizationHandler<TRequirement>,
+            /// where TRequirement is the requirement to be handled.Alternatively, a handler may implement
+            /// IAuthorizationHandler directly to handle more than one type of requirement.
+            ///
+            WeatherMenOnlyRequirement requirement
             ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
         )
         {
@@ -30,28 +35,14 @@ namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
             }
             else
             {
-                var request = _httpContextAccessor?.HttpContext?.Request;
-
-                try
+                if (upn.Contains("frank"))
                 {
-                    var isOk = true;
-
-
-                    if (isOk)
-                    {
-                        context.Succeed(requirement);
-                        return;
-                    }
-                    else
-                    {
-
-                        context.Fail();
-                        return;
-                    }
+                    context.Succeed(requirement);
+                    return;
                 }
-                catch (Exception ex)
+                else
                 {
-                    context.Fail();
+                    context.Fail(); // (optional) hard fail here. if your name is not Frank, you are not worthy of being a weatherman
                     return;
                 }
             }
