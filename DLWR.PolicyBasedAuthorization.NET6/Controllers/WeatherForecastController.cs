@@ -4,10 +4,12 @@ using Microsoft.Identity.Web.Resource;
 
 namespace DLWR.PolicyBasedAuthorization.NET6.Controllers
 {
-    [Authorize(Policy = "My")]
     [ApiController]
     [Route("[controller]")]
+    ////// ADD ATTRIBUTES TO MEET AUTHORIZATION NEEDS //////
+    [Authorize(Policy = "My")]
     [RequiredScope("access_as_user")]
+    ////// ADD ATTRIBUTES TO MEET AUTHORIZATION NEEDS //////
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

@@ -2,13 +2,14 @@
 
 ## Follow tutorials:
 
-- Protected web api https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-protected-web-api-overview
-- Setup oauth flow: https://dev.to/425show/calling-an-azure-ad-secured-api-with-postman-22co
+- [Protected web api](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-protected-web-api-overview)
+- [Setup oauth flow](https://dev.to/425show/calling-an-azure-ad-secured-api-with-postman-22co)
 
 ## Setup .NET CORE 6 api (template selector in VS 2022):
 
 - Check: use MS identity
 - Scaffolds some code in program.cs
+- Swagger is provided by default, which is nice
 
 `using Microsoft.Identity.Web; builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd")); app.UseAuthentication(); app.UseAuthorization(); app.MapControllers();`
 
@@ -34,22 +35,41 @@
 
 These are the only Azure AD settings that your web api requires for the current setup.
 
+`
+
+    {
+      "AzureAd": {
+        "Instance": "https://login.microsoftonline.com/",
+        "ClientId": "",
+        "TenantId": ""
+      },
+      "Logging": {
+        "LogLevel": {
+          "Default": "Warning"
+        }
+      },
+      "AllowedHosts": "*"
+    }
+
+`
+
 ## Postman: Oauth 2.0 Authorization code flow
 
-- fill out all parameters correctly!
-  - Grant type: Authorization code
-  - Callback url: https://oauth.pstmn.io/v1/callback
-  - Check Authorize using browser
-  - Auth url: get from AAD app > Overview > Endpoints (login.msonline.com/.../authorize)
-  - Access token url: get from AAD app > Overview > Endpoints (login.msonline.com/.../token)
-  - !!! scope: api://<clientid>/<scope_name>
-  - Client id
-  - Client secret
-  - State: <empty>
-  - enable popup in browser when prompted
-  - open in browser where you are already logged in to the specific tenant for easy login
-  - use the token
-  - hit send on whatever GET request towards localhost you want to execute (e.g. WeatherController)
+Fill out all parameters correctly! Use the Postman console for debugging purposes.
+
+- Grant type: Authorization code
+- Callback url: https://oauth.pstmn.io/v1/callback
+- Check Authorize using browser
+- Auth url: get from AAD app > Overview > Endpoints (login.msonline.com/.../authorize)
+- Access token url: get from AAD app > Overview > Endpoints (login.msonline.com/.../token)
+- scope: api://<clientid>/<scope_name>
+- Client id
+- Client secret
+- State: <empty>
+- enable popup in browser when prompted
+- open in browser where you are already logged in to the specific tenant for easy login
+- use the token
+- hit send on whatever GET request towards localhost you want to execute (e.g. WeatherController)
 
 # How to do authorization for a web api:
 
@@ -60,7 +80,7 @@ These are the only Azure AD settings that your web api requires for the current 
 
 ## Policy based authorization:
 
-- https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0
+- [MS docs](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) provide good info
 - Some interfaces are implemented to be able to let a handler be reused across multiple requirements
 
 ## Code scaffolding:
@@ -76,3 +96,9 @@ These are the only Azure AD settings that your web api requires for the current 
   - Create a MyRequirement.cs file (blank class, implements IAuthorizationRequirement)
   - Create a MyHandler.cs file (implements AuthorizationHandler<MyRequirement>)
     - override async Task HandleRequirementAsync (contains the logic to let the authorization fail or succeed)
+
+# Useful links
+
+- [Tutorial protected web api](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-protected-web-api-overview)
+- [Fetch access token using the oauth 2.0 authorization code flow in Postman](https://dev.to/425show/calling-an-azure-ad-secured-api-with-postman-22co)
+- [Policy-based authorization (MS docs)](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0)

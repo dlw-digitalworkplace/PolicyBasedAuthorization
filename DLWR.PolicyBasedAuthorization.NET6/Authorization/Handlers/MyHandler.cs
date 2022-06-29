@@ -14,7 +14,9 @@ namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
 
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
+            ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
             MyRequirement requirement
+            ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
         )
         {
             await Task.CompletedTask;

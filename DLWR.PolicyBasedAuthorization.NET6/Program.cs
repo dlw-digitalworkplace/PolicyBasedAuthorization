@@ -7,19 +7,23 @@ using Microsoft.Identity.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 
+////// INJECT CUSTOM AUTHORIZATION HANDLERS //////
 builder.Services.AddScoped<IAuthorizationHandler, MyHandler>();
+////// INJECT CUSTOM AUTHORIZATION HANDLERS //////
 
-// Add services to the container.
+////// ADD AUTHENTICATION //////
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+////// ADD AUTHENTICATION //////
 
+////// ADD AUTHORIZATION + CUSTOM POLICIES //////
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("My", p => p.AddRequirements(new MyRequirement()));
 });
+////// ADD AUTHORIZATION + CUSTOM POLICIES //////
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -34,9 +38,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+////// USE AUTHENTICATION, AUTHORIZATION //////
 app.UseAuthentication();
 app.UseAuthorization();
+////// USE AUTHENTICATION, AUTHORIZATION //////
 
+////// MAP CONTROLLERS AFTER USE AUTHORIZATION //////
 app.MapControllers();
+////// MAP CONTROLLERS AFTER USE AUTHORIZATION //////
 
 app.Run();
