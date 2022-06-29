@@ -3,16 +3,32 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
 {
-    internal class IsWeatherManHandler : AuthorizationHandler<WorksWithCloudsRequirement>
+    ////// IS TRIGGERED BY MULTIPLE REQUIREMENTS: IMPLEMENT IAUTHORIZATIONHANDLER //////
+    internal class IsWeatherManHandler : IAuthorizationHandler
+    ////// IS TRIGGERED BY MULTIPLE REQUIREMENTS: IMPLEMENT IAUTHORIZATIONHANDLER //////
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+        public async Task HandleAsync(AuthorizationHandlerContext context)
+        {
+            foreach (var req in context.Requirements.OfType<IsWeatherManRequirement>())
+            {
+                await HandleRequirementAsync(context, req);
+            }
+
+            foreach (var req in context.Requirements.OfType<WorksWithCloudsRequirement>())
+            {
+                await HandleRequirementAsync(context, req);
+            }
+        }
 
         public IsWeatherManHandler(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
 
-        protected override async Task HandleRequirementAsync(
+        protected async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
             ///
@@ -20,7 +36,7 @@ namespace DLWR.PolicyBasedAuthorization.NET6.Authorization.Handlers
             /// where TRequirement is the requirement to be handled.Alternatively, a handler may implement
             /// IAuthorizationHandler directly to handle more than one type of requirement.
             ///
-            WorksWithCloudsRequirement requirement // todo: add IsWeatherManRequirement
+            IAuthorizationRequirement requirement
             ////// HANDLER IS CALLED WHENEVER A POLICY IS TRIGGERED THAT IS TIED TO THIS TYPE OF REQUIREMENT //////
         )
         {

@@ -23,6 +23,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("WeatherMenOnly", p => p.AddRequirements(new WeatherMenOnlyRequirement()));
     options.AddPolicy("WorksWithClouds", p => p.AddRequirements(new WorksWithCloudsRequirement()));
+    options.AddPolicy("IsWeatherMan", p => p.AddRequirements(new IsWeatherManRequirement()));
 });
 ////// ADD AUTHORIZATION + CUSTOM POLICIES //////
 
