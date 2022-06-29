@@ -7,7 +7,8 @@ namespace DLWR.PolicyBasedAuthorization.NET6.Controllers
     [ApiController]
     [Route("[controller]")]
     ////// ADD ATTRIBUTES TO MEET AUTHORIZATION NEEDS //////
-    [Authorize(Policy = "WeatherMenOnly")]
+    //[Authorize(Policy = "WeatherMenOnly")]
+    [Authorize(Policy = "WorksWithClouds")]
     [RequiredScope("access_as_user")]
     ////// ADD ATTRIBUTES TO MEET AUTHORIZATION NEEDS //////
     public class WeatherForecastController : ControllerBase
